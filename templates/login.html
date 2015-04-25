@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Login</title> 
+        <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{static_url('css/grayscale.css')}}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{{static_url('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="{{static_url('css/style.css')}}" />
+		<script src="{{static_url('js/modernizr.custom.63321.js')}}"></script>
+		<!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
+		<style>	
+			@import url(http://fonts.googleapis.com/css?family=Raleway:400,700);
+			body {
+				background: #7f9b4e url(https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSTJlZRtFEBuKZ6XzMDtjNxRcTG_-qRsJ2cEJgvdJ1TW6iAdFhG) no-repeat center top;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				background-size: cover;
+			}
+			.container > header h1,
+			.container > header h2 {
+				color: #fff;
+				text-shadow: 0 1px 1px rgba(0,0,0,0.7);
+			}
+		</style>
+    </head>
+    <body>
+        <div class="container">
+		
+			
+			<header>
+			
+				<h1><strong>Log In</strong></h1>
+				
+				<aside style="float:left;margin-left:5%">
+					<a href="/" class="btn btn-default btn-lg"><i class="fa fa-home"></i><span class="network-name"> Home</span></a>
+				</aside>
+
+				<div class="support-note">
+					<span class="note-ie">Sorry, only modern browsers.</span>
+				</div>
+				
+			</header>
+			
+			<section class="main">
+				{% if message == "wrong" %}
+					<p style="text-align:center;color:red;margin-right:9.5%">Incorrect Password!</p>
+				{% else %}
+					{% if message == "no" %}
+						<p style="text-align:center;color:orange;margin-right:9.5%">Email not Registered!</p>
+					{% end %}
+				{% end %} 
+				<form class="form-4" style="color:#219ab3" method="POST">
+					{% raw xsrf_form_html() %}
+					<input type="hidden" name="next" value="{{next}}"/>
+				    <p>
+				        Email:
+				        <input type="text" name="email" placeholder="Email" style="color:#219ab3" required>
+				    </p>
+				    <p>
+				        Password:
+				        <input type="password" name='password' placeholder="Password" style="color:#219ab3" required> 
+				    </p>
+
+				    <p>
+				    	<button type="submit" class="btn btn-default btn-lg" style="width:100%"><i class="fa fa-sign-in"></i><span class="network-name"> Log In</span></button>
+				    </p>
+				    <p>
+				    Don't have an account?<a href="/register">Register</a>
+				    </p>       
+				</form>​
+			</section>
+			
+        </div>
+    </body>
+</html>

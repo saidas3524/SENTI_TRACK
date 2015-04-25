@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Classify</title>
+	</head>
+	<body>
+		<div style="text-align:center;margin-top:30px">
+			<h1>Enter text to classify</h1>
+			<form method="post">
+				{% raw xsrf_form_html() %}
+				<label>Enter text</label>
+				<textarea name="text" rows="10" cols="70"></textarea><br/>
+				<input type="submit" value="Classify">
+			</form>
+			<hr style="width:65%"/>
+			<h3 style="color:red">Scores</h3>
+			{% if scores == "0" %}
+				Click on classify to get scores
+			{% else %}
+				<h4>{{text}}</h4>
+				<p>is</p>
+				{% if sentiment[0]=="positive" %}
+					<h2 style="color:green">POSITIVE - {{sentiment[1]}}%</h2>
+					<img src="{{static_url('img/positive.gif')}}" alt="positive">
+				{% else %}
+					{% if sentiment[0] =="negative" %}
+						<h2 style="color:red">NEGATIVE - {{sentiment[1]}}%</h2>
+						<img src="{{static_url('img/negative.gif')}}" alt="negative">
+					{% else %}
+						<h2 style="color:blue">NEUTRAL - {{sentiment[1]}}%</h2>
+						<img src="{{static_url('img/neutral.gif')}}" alt="neutral">
+					{% end %}
+				{% end %}
+				<!-- <p>Your sentence is:</p>
+				<h4>{{text}}</h4><br/>
+				<p>Probability of sentence being positive: <span style="color:green">{{scores[0]}}</span></p>
+				<br/>
+				<p>Probability of sentence being negative: <span style="color:red">{{scores[1]}}</span></p> -->
+
+				<h4 style="color:orange">Individual Word Scores</h4>
+				{% for word in w_scores %}
+					<p>{{word[0]}} - {{word[1]}}%</p>
+				{% end %}
+			{% end %}
+		</div>
+	</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>{{user["name"]}} | Profile</title> 
+        <link href="{{static_url('css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{static_url('css/grayscale.css')}}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{{static_url('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="{{static_url('css/style.css')}}" />
+    <script src="{{static_url('js/modernizr.custom.63321.js')}}"></script>
+    <!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
+    <style> 
+      @import url(http://fonts.googleapis.com/css?family=Raleway:400,700);
+      body {
+        background: #7f9b4e url(https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSTJlZRtFEBuKZ6XzMDtjNxRcTG_-qRsJ2cEJgvdJ1TW6iAdFhG) repeat center top;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+      }
+      .container > header h1,
+      .container > header h2 {
+        color: #fff;
+        text-shadow: 0 1px 1px rgba(0,0,0,0.7);
+      }
+      .fixed
+      {
+        display: none;
+      }
+    </style>
+    </head>
+    <body>
+        <div class="container" style="height:100%">
+    
+      
+      <header>
+      
+        <h1><strong>Profile</strong></h1>
+        <br/>
+        <aside style="float:left;margin-left:5%">
+          <a href="/" class="btn btn-default btn-lg"><i class="fa fa-home"></i><span class="network-name"> Home</span></a>
+        </aside>
+        <div class="col-md-3 col-lg-3 " align="center" style="margin-left:24%"> <img src="{{ modules.Gravatar(user['email'], 120, 'jpg') }}" width="120" alt="{{ escape(user['name']) }}'s Avatar" class="img-circle" > </div> 
+        <br/><br/>
+        <div class="support-note">
+          <span class="note-ie">Sorry, only modern browsers.</span>
+        </div>
+        
+      </header>
+      <br/><br/>
+      <section class="main">
+        <form class="form-4" style="color:#219ab3" method="POST">
+          {% raw xsrf_form_html() %}
+            <input type="hidden" name="hide" value="{{user['email']}}"/>
+            <p>
+                Name: 
+                <span id="s_name">{{user["name"]}}</span>
+                <input type="text" id="name" name="name" class="fixed" value="{{user['name']}}" style="color:#219ab3" required>
+            </p>
+            <p>
+                Email:
+                <span id="s_email">{{user["email"]}}</span>
+                <input type="text" id="email" name='email' class="fixed" value="{{user['email']}}" style="color:#219ab3" required> 
+            </p>
+            <p>
+                <button id="change_button" class="btn btn-default btn-lg fixed" onclick="chan_pas()" style="width:100%"><i class="fa fa-gears"></i><span class="network-name">Change Password</span></button>
+            </p>
+            <p id="oldpas" class="fixed">
+                Old Password:
+                 <input type="password"  name='oldpas' value="1"  style="color:#219ab3" required>
+            </p>
+            <p id="newpas" class="fixed">
+                New Password:
+                  <input type="password"  name='newpas' value="1" style="color:#219ab3" required>
+            </p>
+            <p>
+                Tracking:
+                {% if user["tracking"]==[] %}
+                  <span style="color:#219ab3">None</span>
+                {% else %}
+                  {% for filter in user["tracking"] %}
+                    <p style="margin-top:-8%">{{filter}}</p>
+                  {% end %}
+                {% end %}
+            </p>
+            <p>
+              <button type="submit" id="save_button" class="btn btn-default btn-lg fixed" style="width:100%"><i class="fa fa-floppy-o"></i><span class="network-name"> Save</span></button>
+              <button id="edit_button" class="btn btn-default btn-lg" onclick="edit()" style="width:100%"><i class="fa fa-gears"></i><span class="network-name"> Edit</span></button>
+
+            </p>      
+        </form>​
+      </section>
+      
+        </div>
+        <script src="{{static_url('js/jquery.js')}}"></script>
+        <script type="text/javascript">
+          function edit()
+          {
+              var name = $('#name');
+              var email = $('#email');
+              var s_name = $('#s_name');
+              var s_email = $('#s_email');
+              var save = $('#save_button');
+              var edit = $('#edit_button');
+              var change = $('#change_button');
+              name.removeClass("fixed");
+              change.removeClass("fixed");
+              email.removeClass("fixed");
+              s_name.addClass("fixed");
+              s_email.addClass("fixed");
+              save.removeClass("fixed");
+              edit.addClass("fixed");
+              event.preventDefault();
+          }
+          function chan_pas()
+          {
+            var change = $('#change_button')
+            var oldpass = $('#oldpas');
+            var newpass = $('#newpas');
+            oldpass.removeClass("fixed");
+            newpass.removeClass("fixed");
+            change.addClass("fixed");
+
+
+
+          }
+        </script>
+    </body>
+</html>
